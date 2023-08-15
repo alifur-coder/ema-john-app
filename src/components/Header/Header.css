@@ -1,0 +1,24 @@
+.header {
+  height: 80px;
+  background: #1c2b35;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+.header_nav a {
+  color: #fff;
+  text-decoration: none;
+  font-family: Lato;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.085px;
+  display: inline-block;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+.header_nav a:hover {
+  color: orange;
+}

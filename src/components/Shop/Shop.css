@@ -1,0 +1,11 @@
+.shoping_container {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+.shoping_products {
+  padding-left: 140px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 75px;
+}
