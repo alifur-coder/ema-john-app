@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { addToDb, getShoppingCart } from '../../utilities/fakedb';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useStoreCart from '../../hooks/setCard';
+import UseSetProducts from '../../hooks/setProduct';
+import { addToDb, deleteShoppingCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Products/Product';
 import './Shop.css';
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
-    useEffect(()=>{
-        fetch('products.json')
-        .then(res => res.json())
-        .then(data => setProducts(data));
-    },[])
+    const [products, setProducts] = UseSetProducts([]);
+    const [cart, setCart] = useStoreCart(products);
+   
 
     const HandelAddtoCart = (seletedProduct) =>{
         let newCart = [];
@@ -30,20 +31,10 @@ const Shop = () => {
         addToDb(seletedProduct.id);
     }
 
-    useEffect(()=>{
-       const strodCard = getShoppingCart();
-       const savedCard = [];
-        for(const id in strodCard){
-            const addedProduct = products.find(product => product.id === id);
-            if(addedProduct){
-                addedProduct.quantity = strodCard[id];
-                savedCard.push(addedProduct);
-            }
-        }
-
-        setCart(savedCard);
-        
-    },[products])
+    const HandelClearCart = () => {
+        setCart([]);
+        deleteShoppingCart();
+    }
 
     return (
         <div className='shoping_container'>
@@ -57,7 +48,9 @@ const Shop = () => {
                 }
             </div>
             <div className="shoping_cart">
-               <Cart cart={cart}></Cart>
+               <Cart cart={cart} HandelClearCart={HandelClearCart}>
+                <Link to='/orders'> <button className='al_btn btn-orenge'> Review Order <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button> </Link>
+               </Cart>
             </div>
         </div>
     );

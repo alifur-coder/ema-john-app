@@ -21,6 +21,7 @@
   padding: 10px 20px;
   transition: 0.3s;
 }
+.header_nav a.active,
 .header_nav a:hover {
   color: orange;
 }
