@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import googleIcon from '../../images/imgs/google.svg';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import fireBaseAuth from '../../firebase.init';
+import googleIcon from '../../images/imgs/google.svg';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showError, setError] = useState('');
     const [showSuccess, setSuccess] = useState('');
-    const [SignInWithGoogle, user,] = useSignInWithGoogle(fireBaseAuth);
+    const [SignInWithGoogle,] = useSignInWithGoogle(fireBaseAuth);
+    const [SignInWithEmailAndPassword,user,loading,error] = useSignInWithEmailAndPassword(fireBaseAuth);
     const navigate = useNavigate();
     const handalEmailBlur = e =>{
         setEmail(e.target.value);
@@ -19,7 +20,8 @@ const Login = () => {
     }
     const LoginWithUserPassword = event =>{
         event.preventDefault();
-        console.log(event);
+        SignInWithEmailAndPassword(email,password);
+       
     }
     const SignInWithGoogleHandler = () =>{
         SignInWithGoogle();
@@ -28,6 +30,7 @@ const Login = () => {
         navigate('/shop');
 
     }
+   
     return (
         <div className="auth_from_container">
         <form onSubmit={LoginWithUserPassword} className='auth_from'>
@@ -43,7 +46,8 @@ const Login = () => {
            
        
         
-          <p className='show_error'>{showError}</p>
+          <p className='show_error'>{error?.message}</p>
+          <p className='show_error'>{loading ?? "loading.."}</p>
           <p className='show_success'>{showSuccess}</p>
            
           
