@@ -1,9 +1,24 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../images/Logo.svg';
 import './Header.css';
+import fireBaseAuth from '../../firebase.init';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+
+
 
 const Header = () => {
+    const [user] = useAuthState(fireBaseAuth);
+    const [signOut] = useSignOut(fireBaseAuth);
+    const navigate = useNavigate();
+    const handelLogOut  = () =>{
+        const success =  signOut();
+          if (success) {
+            setTimeout(() => {
+                navigate('/login');
+            }, 1000);
+          }
+    }
     return (
         <nav className='header container'>
             <Link to='/shop'>
@@ -11,11 +26,32 @@ const Header = () => {
             </Link>
 
             <div className='header_nav'>
-                <NavLink to='/shop' >Shops</NavLink>
+                <NavLink to='/shop' >Shop</NavLink>
                 <NavLink to='/orders' >Order Review</NavLink>
                 <NavLink to='/inventory'>Manage Inventory</NavLink>
                 <NavLink to='/about' >About</NavLink>
-                <NavLink to='/sign-up' >Sign Up</NavLink>
+                {
+                    user ?
+                    <>
+                        
+                        <div className='showUserButton'>    
+                            <img src={user.photoURL}  />
+
+                                <div className='userOptions'>
+                                    <p>{user.displayName}</p>
+                                    <button onClick={handelLogOut} className='signOutButton'>Sign Out</button>
+                                </div>
+
+                        </div>
+                    </>
+                       
+                    :
+                    <>
+                        <NavLink to='/sign-up' >Sign Up</NavLink>
+                        <NavLink to='/login' >Login</NavLink>
+                    </>
+                }
+                
             </div>
         </nav>
     );
