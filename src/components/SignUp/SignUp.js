@@ -28,6 +28,10 @@ const SignUp = () => {
     const handalConPasswordBlue = (e) =>{
         setconPassword(e.target.value);
     }
+    if(user){
+        
+        navigate('/home');
+    }
     const createUserEmailPassword = (e) =>{
         e.preventDefault();
         if(Email.length == 0){
@@ -50,10 +54,8 @@ const SignUp = () => {
             setError(error.message);
             return;
         }
-        if(user){
-            setSuccess('Sign up Success');
-            navigate('/home');
-        }
+      
+    
        
     }
     const SignInWithGoogleHandler = () =>{
