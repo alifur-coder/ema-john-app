@@ -127,3 +127,6 @@
   background: #fff;
   padding: 10px 0;
 }
+.show_error {
+  color: red;
+}
