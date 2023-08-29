@@ -35,10 +35,10 @@ const Header = () => {
                     <>
                         
                         <div className='showUserButton'>    
-                            <img src={user.photoURL}  />
+                            <img src={user.photoURL ? user.photoURL : 'https://templates.joomla-monster.com/joomla30/jm-news-portal/components/com_djclassifieds/assets/images/default_profile.png'}  />
 
                                 <div className='userOptions'>
-                                    <p>{user.displayName}</p>
+                                    <p>{user.displayName ? user.displayName : 'No Name'}</p>
                                     <button onClick={handelLogOut} className='signOutButton'>Sign Out</button>
                                 </div>
 
