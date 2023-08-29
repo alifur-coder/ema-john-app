@@ -29,7 +29,6 @@ const SignUp = () => {
         setconPassword(e.target.value);
     }
     if(user){
-        
         navigate('/home');
     }
     const createUserEmailPassword = (e) =>{
@@ -59,7 +58,6 @@ const SignUp = () => {
        
     }
     const SignInWithGoogleHandler = () =>{
-       
         signInWithGoogle();
     }
 
